@@ -7,7 +7,7 @@ app.use(express.static('public'));
 app.set('views', 'pages');
 app.set('view engine', 'ejs');
 
-app.use('/', router.home)
+app.use('/', router)
 
 app.listen(3000, function() {
     console.log('Server listening on Port 3000...')

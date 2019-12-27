@@ -1,3 +1,7 @@
-exports.home = function(request, response) {
-    response.render('home-guest');
-}
+const express = require('express');
+const router = express.Router();
+const guest = require('./controllers/guest.controller')
+
+router.use('/', guest.home);
+
+module.exports = router;
