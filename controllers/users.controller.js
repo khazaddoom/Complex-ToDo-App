@@ -13,10 +13,12 @@ exports.register = function(request, response) {
     response.send('Thank you for registering with us');
 }
 
-exports.login = function(request, response) {
+exports.login = async function(request, response) {
 
     let user = new User(request.body);
-    user.login()
-        .then(message => response.send(message))
-        .catch(err => response.send(err))
+    try {
+        response.send(await user.login())
+    } catch (error) {
+        response.send(error)
+    }
 }

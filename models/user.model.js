@@ -41,20 +41,20 @@ User.prototype.register = function() {
 
 
 User.prototype.login = function() {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         // cleanup
         this.cleanup();
 
-        usersCollection
-        .findOne({username: this.data.username})
-        .then((matchedUser => {
+        try {
+            const matchedUser = await usersCollection.findOne({username: this.data.username});
             if(matchedUser && matchedUser.password == this.data.password) {
                 resolve('Login successful.')
             } else {
                 reject('Login failed! Try again.')
             }
-        }))
-        .catch(error => reject(error));
+        } catch (error) {
+            reject(error)
+        }
     });
 }  
 
