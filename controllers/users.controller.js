@@ -1,7 +1,7 @@
 const User = require('../models/user.model')
 exports.home = function(request, response) {
     if(request.session.user) {
-        response.send('Welcome to the application!')
+        response.render('home-dashboard'); 
     } else {
         response.render('home-guest');        
     }

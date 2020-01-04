@@ -7,7 +7,7 @@ const connectionString = process.env.CONNECTION_STRING;
 
 mongodb.connect(connectionString, { useNewUrlParser: true, useUnifiedTopology: true }, function(error, client) {
 
-    module.exports = client.db();
+    module.exports = client;
 
     const app = require('./app');
 
