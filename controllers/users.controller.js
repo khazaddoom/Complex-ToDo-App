@@ -1,6 +1,11 @@
 const User = require('../models/user.model')
 exports.home = function(request, response) {
-    response.render('home-guest');
+    if(request.session.user) {
+        response.send('Welcome to the application!')
+    } else {
+        response.render('home-guest');        
+    }
+    
 }
 
 exports.register = function(request, response) {
@@ -17,7 +22,11 @@ exports.login = async function(request, response) {
 
     let user = new User(request.body);
     try {
-        response.send(await user.login())
+        const result = await user.login();
+        request.session.user = {
+            username: user.data.username
+        }
+        response.send(result)
     } catch (error) {
         response.send(error)
     }
