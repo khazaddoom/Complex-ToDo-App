@@ -40,18 +40,19 @@ User.prototype.register = function() {
 };
 
 
-User.prototype.login = function(callback) {
-    // cleanup
-    this.cleanup();
+User.prototype.login = function() {
+    return new Promise((resolve, reject) => {
+        // cleanup
+        this.cleanup();
 
-    usersCollection.findOne({username: this.data.username}, (err, matchedUser) => {
-        if(matchedUser && matchedUser.password == this.data.password) {
-            callback('Login successful.')
-        } else {
-            callback('Login failed! Try again.')
-        }
-    })
-
+        usersCollection.findOne({username: this.data.username}).then(matchedUser => {
+            if(matchedUser && matchedUser.password == this.data.password) {
+                resolve('Login successful.')
+            } else {
+                reject('Login failed! Try again.')
+            }
+        }).catch(err => reject(err))
+    });
 }
 
 module.exports = User;
