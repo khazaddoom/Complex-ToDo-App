@@ -12,3 +12,11 @@ exports.register = function(request, response) {
     }
     response.send('Thank you for registering with us');
 }
+
+exports.login = function(request, response) {
+
+    let user = new User(request.body);
+    user.login(function(message) {
+        response.send(message)
+    });
+}

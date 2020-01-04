@@ -9,15 +9,15 @@ let User = function(data) {
 
 User.prototype.cleanup = function() {
 
+    if(typeof(this.data.username) != 'string') { this.data.username = '';}
+    if(typeof(this.data.email) != 'string') { this.data.email = '';}
+    if(typeof(this.data.password) != 'string') { this.data.password = '';}
+
     this.data = {
         username: this.data.username.trim(),
         email: this.data.email.trim(),
         password: this.data.password
     }
-
-    if(typeof(this.data.username) != 'string') { this.data.username = '';}
-    if(typeof(this.data.email) != 'string') { this.data.email = '';}
-    if(typeof(this.data.password) != 'string') { this.data.password = '';}
 }
 
 User.prototype.validate = function() {
@@ -38,5 +38,20 @@ User.prototype.register = function() {
     }
 
 };
+
+
+User.prototype.login = function(callback) {
+    // cleanup
+    this.cleanup();
+
+    usersCollection.findOne({username: this.data.username}, (err, matchedUser) => {
+        if(matchedUser && matchedUser.password == this.data.password) {
+            callback('Login successful.')
+        } else {
+            callback('Login failed! Try again.')
+        }
+    })
+
+}
 
 module.exports = User;
