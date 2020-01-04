@@ -5,6 +5,19 @@ let User = function(data) {
     this.errors = [];
 };
 
+User.prototype.cleanup = function() {
+
+    this.data = {
+        username: this.data.username.trim(),
+        email: this.data.email.trim(),
+        password: this.data.password
+    }
+
+    if(typeof(this.data.username) != 'string') { this.data.username = '';}
+    if(typeof(this.data.email) != 'string') { this.data.email = '';}
+    if(typeof(this.data.password) != 'string') { this.data.password = '';}
+}
+
 User.prototype.validate = function() {
     if(this.data.username == '') this.errors.push('Username is a Required Field.');
     if(this.data.username != '' && !validator.isAlphanumeric(this.data.username)) this.errors.push('Username can only contain characters or numbers.')
@@ -13,6 +26,8 @@ User.prototype.validate = function() {
 }
 
 User.prototype.register = function() {
+    // cleanup
+    this.cleanup();
     // validate
     this.validate();
 };
