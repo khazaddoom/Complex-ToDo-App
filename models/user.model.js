@@ -45,14 +45,17 @@ User.prototype.login = function() {
         // cleanup
         this.cleanup();
 
-        usersCollection.findOne({username: this.data.username}).then(matchedUser => {
+        usersCollection
+        .findOne({username: this.data.username})
+        .then((matchedUser => {
             if(matchedUser && matchedUser.password == this.data.password) {
                 resolve('Login successful.')
             } else {
                 reject('Login failed! Try again.')
             }
-        }).catch(err => reject(err))
+        }))
+        .catch(error => reject(error));
     });
-}
+}  
 
 module.exports = User;

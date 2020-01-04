@@ -17,7 +17,6 @@ exports.login = function(request, response) {
 
     let user = new User(request.body);
     user.login()
-        .then(message => {
-            response.send(message)
-        }).catch(err => response.send(err))
+        .then(message => response.send(message))
+        .catch(err => response.send(err))
 }
