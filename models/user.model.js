@@ -1,5 +1,6 @@
 const usersCollection = require('../db').collection('users');
 const validator = require('validator');
+const bcrypt = require('bcryptjs');
 
 
 let User = function(data) {
@@ -34,6 +35,8 @@ User.prototype.register = function() {
     this.validate();    
 
     if(!(this.errors.length > 0)) {
+        let salt = bcrypt.genSaltSync(10);
+        this.data.password = bcrypt.hashSync(this.data.password, salt);
         usersCollection.insertOne(this.data);
     }
 
@@ -47,7 +50,7 @@ User.prototype.login = function() {
 
         try {
             const matchedUser = await usersCollection.findOne({username: this.data.username});
-            if(matchedUser && matchedUser.password == this.data.password) {
+            if(matchedUser && bcrypt.compareSync(this.data.password, matchedUser.password)) {
                 resolve('Login successful.')
             } else {
                 reject('Login failed! Try again.')
