@@ -15,8 +15,12 @@ function reducer(state={counter: 0}, action) {
             }
     
         default:
-            break;
+            return {
+                ...state
+            }
     }
 
     
 }
+
+expect()
