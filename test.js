@@ -1,33 +1,22 @@
-// function sayHello() {
-//     return new Promise((resolve, reject) => {
-//         reject('Hello World!!!')
-//     })
-// }
+function reducer(state={counter: 0}, action) {
+    switch (action.type) {
+        case 'INCREMENT_COUNTER':
+            
+            return {
+                counter: state.counter + 1,
+                ...state
+            }
+        
+            case 'DECREMENT_COUNTER':
+        
+            return {
+                counter: state.counter - 1,
+                ...state
+            }
+    
+        default:
+            break;
+    }
 
-// async function greet() {
-//     try {
-//         console.log(await sayHello())
-//     } catch (error) {
-//         console.log(error)
-//     }
-
-// }
-
-// greet();
-
-
-function scaryClown() {
-    return new Promise(resolve => {
-        setTimeout(() => {
-            resolve('🤡');
-        }, 2000);
-    });
+    
 }
-
-
-const msg = async function () {
-    const msg = await scaryClown();
-    console.log(msg);
-}
-
-msg();
